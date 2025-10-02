@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 from canonical_transformer.morphisms import map_df_to_csv
-from .path_director import FILE_FOLDER
+from crypto_etl.path_director import FILE_FOLDER
 from .consts import BINANCE_API_URL
 
 
