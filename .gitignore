@@ -171,3 +171,10 @@ config.json
 *.bak
 *.backup
 *.old
+
+# Environment variables
+.env
+.env.local
+
+*.ipynb_checkpoints/
+*.ipynb
