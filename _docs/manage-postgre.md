@@ -117,11 +117,11 @@ Servers
 
 ```sql
 -- 예시 쿼리
-SELECT * FROM quant.binance_prices LIMIT 10;
+SELECT * FROM database_crypto.prices_binance LIMIT 10;
 
-SELECT COUNT(*) FROM quant.binance_prices;
+SELECT COUNT(*) FROM database_crypto.prices_binance;
 
-SELECT DISTINCT datetime FROM quant.binance_prices ORDER BY datetime DESC;
+SELECT DISTINCT datetime FROM database_crypto.prices_binance ORDER BY datetime DESC;
 ```
 
 ---

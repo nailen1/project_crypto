@@ -49,7 +49,7 @@ RUN service postgresql start && \
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_NAME} TO ${DB_USER};"
 
 # Expose ports
-EXPOSE 8888 5432 80
+EXPOSE 8888 5432 5050
 
 # Copy and setup startup script
 COPY start.sh /app/start.sh

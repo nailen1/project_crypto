@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import List, Dict, Union
 
 
-def insert_binance_data(data: List[Dict], table_name: str = 'quant.binance_prices'):
+def insert_binance_data(data: List[Dict], table_name: str = 'database_crypto.prices_binance'):
     """
     Insert list of Binance price snapshots into database
     """

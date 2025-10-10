@@ -1,1 +1,1 @@
-from .postgre_manager import *
+from .postgres_manager import *

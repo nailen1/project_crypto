@@ -14,7 +14,7 @@ services:
     ports:
       - "8889:8888"  # Jupyter
       - "5432:5432"  # PostgreSQL
-      - "5050:80"    # PgAdmin
+      - "5050:5050"  # PgAdmin
     volumes:
       - .:/app
       - postgres_data:/var/lib/postgresql/data

@@ -1,11 +1,19 @@
 #!/bin/bash
 
+# Start PostgreSQL
+echo "Starting PostgreSQL..."
+service postgresql start
+
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to be ready..."
-while ! pg_isready -h postgres -p 5432 -U ${DB_USER:-crypto_user}; do
+while ! pg_isready -h localhost -p 5432 -U ${DB_USER}; do
   sleep 1
 done
 echo "PostgreSQL is ready!"
+
+# Start PgAdmin in background
+echo "Starting PgAdmin..."
+pgadmin4 --port=5050 --host=0.0.0.0 &
 
 # Start ETL in background
 echo "Starting ETL process in background..."
