@@ -176,5 +176,8 @@ config.json
 .env
 .env.local
 
+# virtual environment
+env-*/
+
 *.ipynb_checkpoints/
 *.ipynb

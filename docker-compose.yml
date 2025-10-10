@@ -1,20 +1,20 @@
 version: "3.8"
 
 services:
-  # Single container with all ETL services
-  project-etl:
+  # Single container with all crypto ETL services
+  project-crypto:
     build:
       context: .
       args:
         DB_USER: ${DB_USER}
         DB_PASSWORD: ${DB_PASSWORD}
         DB_NAME: ${DB_NAME}
-    container_name: container-etl
+    container_name: container-crypto
     restart: unless-stopped
     ports:
-      - "8889:8888"  # Jupyter
-      - "5432:5432"  # PostgreSQL
-      - "5050:5050"  # PgAdmin
+      - "8889:8888" # Jupyter
+      - "5432:5432" # PostgreSQL
+      - "5050:5050" # PgAdmin
     volumes:
       - .:/app
       - postgres_data:/var/lib/postgresql/data

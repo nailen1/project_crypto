@@ -11,6 +11,11 @@ while ! pg_isready -h localhost -p 5432 -U ${DB_USER}; do
 done
 echo "PostgreSQL is ready!"
 
+# Initialize database schema and permissions
+echo "Initializing database schema..."
+PGPASSWORD=${DB_PASSWORD} psql -h localhost -p 5432 -U ${DB_USER} -d ${DB_NAME} -v DB_USER=${DB_USER} -f /app/init.sql
+echo "Database initialization completed!"
+
 # Start PgAdmin in background
 echo "Starting PgAdmin..."
 pgadmin4 --port=5050 --host=0.0.0.0 &

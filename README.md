@@ -19,20 +19,48 @@ git clone <repository-url>
 cd module-crypto_etl
 ```
 
-2. Run the setup script:
+2. Create environment configuration file:
+
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit the .env file with your actual values
+# Required variables:
+# - DB_USER: Database username (replace 'your_name' with your actual username)
+# - DB_PASSWORD: Database password (use strong password)
+# - DB_NAME: Database name (e.g., database_crypto)
+# - PGADMIN_EMAIL: pgAdmin login email
+# - PGADMIN_PASSWORD: pgAdmin login password
+```
+
+3. Run the setup script:
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-3. Activate the virtual environment:
+4. Activate the virtual environment:
 
 ```bash
 source .env-crypto/bin/activate
 ```
 
 ## Usage
+
+### Running with Docker
+
+```bash
+# Build and start the container
+docker compose up -d
+
+# Check container status
+docker compose ps
+
+# View logs
+docker compose logs -f
+```
 
 ### Running the Data Collection Scheduler
 

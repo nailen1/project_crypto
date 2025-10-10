@@ -8,10 +8,16 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# Build arguments
-ARG DB_USER=crypto_user
-ARG DB_PASSWORD=crypto_password
-ARG DB_NAME=crypto_db
+# Build arguments (required - no default values)
+ARG DB_USER
+ARG DB_PASSWORD
+ARG DB_NAME
+
+# Validate required arguments
+RUN if [ -z "$DB_USER" ] || [ -z "$DB_PASSWORD" ] || [ -z "$DB_NAME" ]; then \
+    echo "Error: DB_USER, DB_PASSWORD, DB_NAME are all required" && \
+    exit 1; \
+fi
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \

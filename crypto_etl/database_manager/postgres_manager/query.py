@@ -6,7 +6,7 @@ from typing import Optional
 
 def query_by_datetime_snapshots(
     n_snapshots: int = 1,
-    table_name: str = 'database_crypto.prices_binance',
+    table_name: str = 'schema_crypto.prices_binance',
     option_include_created_at: bool = False,
     option_exclude_zero: bool = True
 ):

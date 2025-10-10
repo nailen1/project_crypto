@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 from canonical_transformer.morphisms import map_df_to_csv, map_df_to_data
-from crypto_etl.extractors.binance.utils import insert_binance_data
+from crypto_etl.database_manager.postgres_manager.insert import insert_binance_data
 from crypto_etl.path_director import FILE_FOLDER
 from .consts import BINANCE_API_URL
 
@@ -35,7 +35,7 @@ def get_df_binance_at_present()->pd.DataFrame:
         return None
 
 
-def insert_df_binance_at_present(option_insert:bool=True, option_save:bool=True)->pd.DataFrame:
+def insert_and_save_df_binance_at_present(option_insert:bool=True, option_save:bool=True)->pd.DataFrame:
     df_at_present = get_df_binance_at_present()
     if df_at_present is not None:
         if option_insert:
