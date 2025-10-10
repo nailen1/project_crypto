@@ -1,47 +1,32 @@
 version: "3.8"
 
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: quant-postgres
+  # Single container with all ETL services
+  project-etl:
+    build:
+      context: .
+      args:
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_NAME: ${DB_NAME}
+    container_name: container-etl
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_INITDB_ARGS: "-E UTF8"
-      TZ: Asia/Seoul
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "8889:8888"  # Jupyter
+      - "5432:5432"  # PostgreSQL
+      - "5050:80"    # PgAdmin
     volumes:
+      - .:/app
       - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - quant-network
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: quant-pgadmin
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
-    ports:
-      - "5050:80"
-    volumes:
       - pgadmin_data:/var/lib/pgadmin
-    networks:
-      - quant-network
-    depends_on:
-      postgres:
-        condition: service_healthy
+    environment:
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
 
 volumes:
   postgres_data:
