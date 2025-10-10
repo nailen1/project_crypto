@@ -2,14 +2,11 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 
--- Create schema for quant data
-CREATE SCHEMA IF NOT EXISTS quant;
-
--- Set default schema
-SET search_path TO quant, public;
-
 -- Create schema_crypto schema
 CREATE SCHEMA IF NOT EXISTS schema_crypto;
+
+-- Set default schema
+SET search_path TO schema_crypto, public;
 
 -- Create binance_prices table
 CREATE TABLE IF NOT EXISTS schema_crypto.prices_binance (
@@ -37,18 +34,8 @@ COMMENT ON COLUMN schema_crypto.prices_binance.datetime IS 'Snapshot timestamp f
 COMMENT ON COLUMN schema_crypto.prices_binance.symbol IS 'Trading pair symbol (e.g., BTCUSDT, ETHBTC)';
 COMMENT ON COLUMN schema_crypto.prices_binance.price IS 'Price value (0 means inactive pair)';
 
--- Grant permissions
-GRANT ALL PRIVILEGES ON SCHEMA quant TO :DB_USER;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA quant TO :DB_USER;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA quant TO :DB_USER;
-
--- Grant permissions for schema_crypto schema
-GRANT ALL PRIVILEGES ON SCHEMA schema_crypto TO :DB_USER;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA schema_crypto TO :DB_USER;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA schema_crypto TO :DB_USER;
-
 -- Log
 DO $$
 BEGIN
-    RAISE NOTICE 'Quant database initialized successfully at %', NOW();
+    RAISE NOTICE 'Crypto database initialized successfully at %', NOW();
 END $$;

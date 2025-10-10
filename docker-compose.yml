@@ -1,32 +1,69 @@
 version: "3.8"
 
 services:
-  # Single container with all crypto ETL services
-  project-crypto:
-    build:
-      context: .
-      args:
-        DB_USER: ${DB_USER}
-        DB_PASSWORD: ${DB_PASSWORD}
-        DB_NAME: ${DB_NAME}
-    container_name: container-crypto
+  # PostgreSQL Database
+  crypto-postgres:
+    image: postgres:17-alpine
+    container_name: crypto-postgres
     restart: unless-stopped
     ports:
-      - "8889:8888" # Jupyter
-      - "5432:5432" # PostgreSQL
-      - "5050:5050" # PgAdmin
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - network-crypto
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # PgAdmin Web UI
+  crypto-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: crypto-pgadmin
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - network-crypto
+    depends_on:
+      crypto-postgres:
+        condition: service_healthy
+
+  # Jupyter + ETL Application
+  crypto-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: crypto-app
+    restart: unless-stopped
+    ports:
+      - "8889:8888"
     volumes:
       - .:/app
-      - postgres_data:/var/lib/postgresql/data
-      - pgadmin_data:/var/lib/pgadmin
     environment:
-      - DB_HOST=localhost
+      - DB_HOST=crypto-postgres
       - DB_PORT=5432
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    networks:
+      - network-crypto
+    depends_on:
+      crypto-postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:
@@ -35,5 +72,5 @@ volumes:
     driver: local
 
 networks:
-  quant-network:
+  network-crypto:
     driver: bridge

@@ -39,9 +39,15 @@ def insert_and_save_df_binance_at_present(option_insert:bool=True, option_save:b
     df_at_present = get_df_binance_at_present()
     if df_at_present is not None:
         if option_insert:
+            print(f"Inserting data into schema_crypto.prices_binance")
             data_at_present = map_df_to_data(df_at_present)
-            insert_binance_data(data=data_at_present, table_name='database_crypto.prices_binance')
+            result = insert_binance_data(data=data_at_present, table_name='schema_crypto.prices_binance')
+            
+            # ← 추가: 결과 출력
+            print(f"✓ Inserted: {result['inserted']}, Skipped: {result['skipped']}, Failed: {result['failed']}")
+            
         if option_save:
+            print(f"Saving df into {FILE_FOLDER['binance']}")
             return save_df_binance_at_present()
     else:
         return None

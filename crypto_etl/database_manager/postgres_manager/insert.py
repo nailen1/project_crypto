@@ -5,7 +5,10 @@ from sqlalchemy import text
 from decimal import Decimal
 from datetime import datetime
 from typing import List, Dict, Union
+import logging
 
+# 로거 설정
+logger = logging.getLogger(__name__)
 
 def insert_binance_data(data: List[Dict], table_name: str = 'schema_crypto.prices_binance'):
     """
@@ -23,13 +26,15 @@ def insert_binance_data(data: List[Dict], table_name: str = 'schema_crypto.price
         for snapshot in data:
             dt = snapshot.get('datetime')
             if not dt:
+                logger.warning(f"Missing datetime in snapshot: {snapshot}")  # ← 추가
                 failed_count += 1
                 continue
             
             if isinstance(dt, str):
                 try:
                     dt = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
-                except ValueError:
+                except ValueError as e:
+                    logger.error(f"Invalid datetime format '{dt}': {e}")  # ← 추가
                     failed_count += 1
                     continue
             
@@ -57,21 +62,30 @@ def insert_binance_data(data: List[Dict], table_name: str = 'schema_crypto.price
                         }
                     )
                     
-                    # rowcount로 실제 INSERT 여부 확인
                     if result.rowcount > 0:
                         inserted_count += 1
                     else:
                         skipped_count += 1
                     
                 except Exception as e:
+                    # ← 핵심 개선: 에러 내용을 로그에 출력!
+                    logger.error(f"Failed to insert {symbol} at {dt}: {type(e).__name__}: {e}")
                     failed_count += 1
                     continue
         
         conn.commit()
     
-    return {
+    result = {
         'total_snapshots': len(data),
-        'inserted': inserted_count,      # 실제 INSERT된 개수
-        'skipped': skipped_count,        # 중복으로 스킵된 개수
+        'inserted': inserted_count,
+        'skipped': skipped_count,
         'failed': failed_count
     }
+    
+    # ← 추가: 결과 요약 로그
+    if failed_count > 0:
+        logger.warning(f"Insert result: {result}")
+    else:
+        logger.info(f"Insert result: {result}")
+    
+    return result
