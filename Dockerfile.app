@@ -28,9 +28,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
-# Create necessary directories
-RUN mkdir -p data/dataset-binance
-
 # Expose Jupyter port
 EXPOSE 8888
 

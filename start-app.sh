@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Create necessary directories (상대 경로)
+mkdir -p data/dataset-binance
+
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to be ready..."
 while ! pg_isready -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME}; do
