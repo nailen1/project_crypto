@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Jupyter
-RUN pip install --no-cache-dir jupyter notebook jupyterlab
+# RUN pip install --no-cache-dir jupyter notebook jupyterlab
 
 # Copy requirements first for better caching
 COPY requirements.txt .
@@ -29,7 +29,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose Jupyter port
-EXPOSE 8888
+# EXPOSE 8888
 
 # Copy and setup startup script
 COPY start-app.sh /app/start-app.sh

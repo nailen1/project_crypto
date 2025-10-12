@@ -22,7 +22,7 @@ Version: 1.0.0
 
 from crypto_etl.extractors.binance.scheduler import run_scheduler
 
-TIME_INTERVAL_SECONDS = 10
+TIME_INTERVAL_SECONDS = 60
 
 if __name__ == "__main__":
     run_scheduler(time_interval_seconds=TIME_INTERVAL_SECONDS)

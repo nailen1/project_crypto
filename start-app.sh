@@ -15,5 +15,5 @@ echo "Starting ETL process in background..."
 python main.py &
 
 # Start Jupyter in foreground (this keeps the container running)
-echo "Starting Jupyter Notebook server..."
-jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password=""
+# echo "Starting Jupyter Notebook server..."
+# jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password=""

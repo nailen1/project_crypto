@@ -1,9 +1,8 @@
 import time
 from .utils import insert_and_save_df_binance_at_present
 
-TIME_INTERVAL_SECONDS = 10
 
-def run_scheduler(time_interval_seconds:int=TIME_INTERVAL_SECONDS):
+def run_scheduler(time_interval_seconds:int):
     """Run Binance data collection scheduler."""
     print("Starting Binance data collection scheduler...")
     try:
@@ -19,6 +18,3 @@ def run_scheduler(time_interval_seconds:int=TIME_INTERVAL_SECONDS):
             time.sleep(time_interval_seconds)
     except KeyboardInterrupt:
         print("\nScheduler stopped")
-
-if __name__ == "__main__":
-    run_scheduler()
