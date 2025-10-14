@@ -32,7 +32,7 @@ COPY . .
 # EXPOSE 8888
 
 # Copy and setup startup script
-COPY start-app.sh /app/start-app.sh
+COPY crypto_docker/start-app.sh /app/start-app.sh
 RUN chmod +x /app/start-app.sh
 
 # Default command

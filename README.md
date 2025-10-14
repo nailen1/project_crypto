@@ -60,6 +60,12 @@ docker compose ps
 
 # View logs
 docker compose logs -f
+
+# Stop containers
+docker compose down
+
+# Restart containers
+docker compose restart
 ```
 
 ### Running the Data Collection Scheduler
@@ -73,16 +79,26 @@ This will start the continuous data collection process. Press `Ctrl+C` to stop.
 ### Project Structure
 
 ```
-module-crypto_etl/
-├── crypto_etl/           # Main package
-│   └── extractors/       # Data extractors
-│       └── binance/      # Binance-specific extractor
-├── data/                 # Data storage directory
-│   └── dataset-binance/  # Collected CSV files
-├── main.py              # Main entry point
-├── setup.sh             # Setup script
-├── requirements.txt     # Python dependencies
-└── README.md           # This file
+project-crypto/
+├── docker-compose.yml         # Docker Compose configuration
+├── Dockerfile.app            # Application Dockerfile
+├── crypto_docker/            # Docker utilities and settings
+│   ├── start-app.sh         # Container startup script
+│   └── postgres_setting/    # PostgreSQL database settings
+│       ├── init.sql         # Database initialization script
+│       ├── add_klines_table.sql  # Additional table migration
+│       ├── manage-postgre.md     # PostgreSQL management guide
+│       └── README.md        # PostgreSQL settings documentation
+├── crypto_etl/              # Main ETL package
+│   └── extractors/          # Data extractors
+│       └── binance/         # Binance-specific extractor
+├── crypto_database/         # Database management
+├── crypto_strategy/         # Trading strategies
+├── data/                    # Data storage directory
+│   └── dataset-binance/     # Collected CSV files
+├── main.py                  # Main entry point
+├── requirements.txt         # Python dependencies
+└── README.md               # This file
 ```
 
 ## Configuration
