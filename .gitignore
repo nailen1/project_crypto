@@ -179,5 +179,11 @@ config.json
 # virtual environment
 env-*/
 
-*.ipynb_checkpoints/
-*.ipynb
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 루트 폴더의 .ipynb 파일들만 무시 (notebooks 폴더는 제외)
+/*.ipynb
+
+# notebooks 폴더의 체크포인트 파일들은 무시
+notebooks/.ipynb_checkpoints/
