@@ -14,4 +14,4 @@ echo "PostgreSQL is ready!"
 
 # Run ETL in foreground
 echo "Starting ETL process..."
-exec python main.py
+exec python -m crypto_etl
