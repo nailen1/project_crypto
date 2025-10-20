@@ -42,15 +42,13 @@ services:
       crypto-postgres:
         condition: service_healthy
 
-  # Jupyter + ETL Application
+  # ETL Application
   crypto-app:
     build:
       context: .
       dockerfile: Dockerfile.app
     container_name: crypto-app
     restart: unless-stopped
-    ports:
-      - "8889:8888"
     volumes:
       - .:/app
     environment:

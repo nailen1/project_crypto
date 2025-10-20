@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Jupyter
-# RUN pip install --no-cache-dir jupyter notebook jupyterlab
-
 # Copy requirements first for better caching
 COPY requirements.txt .
 
@@ -27,9 +24,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
-
-# Expose Jupyter port
-# EXPOSE 8888
 
 # Copy and setup startup script
 RUN chmod +x /app/crypto_docker/start-app.sh
