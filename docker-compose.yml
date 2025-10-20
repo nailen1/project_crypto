@@ -1,10 +1,8 @@
-version: "3.8"
-
 services:
   # PostgreSQL Database
-  crypto-postgres:
+  service-crypto_postgres:
     image: postgres:17-alpine
-    container_name: crypto-postgres
+    container_name: container-crypto_postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
@@ -18,15 +16,15 @@ services:
     networks:
       - network-crypto
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME} -h localhost"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   # PgAdmin Web UI
-  crypto-pgadmin:
+  service-crypto_pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: crypto-pgadmin
+    container_name: container-crypto_pgadmin
     restart: unless-stopped
     ports:
       - "5050:80"
@@ -39,15 +37,15 @@ services:
     networks:
       - network-crypto
     depends_on:
-      crypto-postgres:
+      service-crypto_postgres:
         condition: service_healthy
 
   # ETL Application
-  crypto-app:
+  service-crypto_etl:
     build:
       context: .
       dockerfile: Dockerfile.app
-    container_name: crypto-app
+    container_name: container-crypto_etl
     restart: unless-stopped
     volumes:
       - .:/app
@@ -60,7 +58,7 @@ services:
     networks:
       - network-crypto
     depends_on:
-      crypto-postgres:
+      service-crypto_postgres:
         condition: service_healthy
 
 volumes:

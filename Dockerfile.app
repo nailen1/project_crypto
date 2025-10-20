@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Copy and setup startup script
-RUN chmod +x /app/crypto_docker/start-app.sh
+RUN chmod +x /app/crypto_docker/start-etl.sh
 
 # Default command
-CMD ["/app/crypto_docker/start-app.sh"]
+CMD ["/app/crypto_docker/start-etl.sh"]

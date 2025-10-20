@@ -1,9 +1,9 @@
 pandas
 requests
 tqdm
-canonical_transformer>=1.0.8
-universal_timeseries_transformer>=0.3.9
+python-dotenv>=1.0.0
 sqlalchemy>=2.0.25
 psycopg2-binary>=2.9.10
-python-dotenv>=1.0.0
+canonical_transformer>=1.0.8
+universal_timeseries_transformer>=0.3.9
 timeseries_performance_calculator>=0.3.11
