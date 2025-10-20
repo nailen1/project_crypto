@@ -110,11 +110,11 @@ def insert_and_save_df_binance_klines_5m(option_insert: bool = True,
         return None
 
     if option_insert:
-        print("Inserting data into schema_crypto.klines_binance")
+        print("Inserting data into schema_crypto.binance_klines")
         data_klines = map_df_to_data(df)
         result = insert_binance_klines(
             data=data_klines,
-            table_name='schema_crypto.klines_binance'
+            table_name='schema_crypto.binance_klines'
         )
         print(f"✓ Inserted: {result['inserted']}, "
               f"Skipped: {result['skipped']}, "

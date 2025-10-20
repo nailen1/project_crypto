@@ -89,11 +89,11 @@ def insert_and_save_df_binance_prices_at_present(
     try:
         # INSERT
         if option_insert:
-            print("Inserting data into schema_crypto.prices_binance")
+            print("Inserting data into schema_crypto.binance_prices")
             data_at_present = map_df_to_data(df_at_present)
             result = insert_binance_prices(
                 data=data_at_present,
-                table_name='schema_crypto.prices_binance'
+                table_name='schema_crypto.binance_prices'
             )
             print(f"✓ Inserted: {result['inserted']}, "
                   f"Skipped: {result['skipped']}, "
