@@ -122,11 +122,11 @@ def insert_and_save_df_binance_klines_5m(option_insert: bool = True,
         del data_klines
 
     if option_save:
-        print(f"Saving df into {FILE_FOLDER['binance']}")
+        print(f"Saving df into {FILE_FOLDER['binance-klines']}")
         datetime_close = str(df['datetime_close'].max())
         df_for_csv = df.copy()
         map_df_to_csv(df_for_csv,
-                      file_folder=FILE_FOLDER['binance'],
+                      file_folder=FILE_FOLDER['binance-klines'],
                       file_name=f'binance_klines_5m-at{datetime_close}.csv')
         del df_for_csv
 

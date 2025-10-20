@@ -2,6 +2,8 @@
 
 # Create data directory
 mkdir -p data/dataset-binance
+mkdir -p data/binance-prices
+mkdir -p data/binance-klines
 
 # Wait for PostgreSQL
 echo "Waiting for PostgreSQL to be ready..."

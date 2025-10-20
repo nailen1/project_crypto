@@ -5,4 +5,6 @@ FILE_FOLDER = {
     'binance': os.path.join(ROOT_DIR, 'dataset-binance'),
     'total':  os.path.join(ROOT_DIR, 'dataset-total'),
     'snapshots': os.path.join(ROOT_DIR, 'snapshots'),
+    'binance-prices': os.path.join(ROOT_DIR, 'binance-prices'),
+    'binance-klines': os.path.join(ROOT_DIR, 'binance-klines'),
 }
